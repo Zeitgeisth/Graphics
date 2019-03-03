@@ -1,11 +1,18 @@
+import java.awt.BorderLayout;
 import java.awt.Canvas;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 
 public class Display extends Canvas {
    private final JFrame m_frame;
@@ -31,6 +38,7 @@ public class Display extends Canvas {
 	   
 	   
 	   m_frame = new JFrame();
+	   m_frame.setLayout(new FlowLayout());
 	   m_frame.add(this);
 	   m_frame.pack();
 	   m_frame.setResizable(false);
@@ -39,10 +47,26 @@ public class Display extends Canvas {
 	   m_frame.setTitle(title);
 	   m_frame.setVisible(true);
 	   
+//	   m_frame.add(new JButton("test"));
+//	   m_frame.pack();
+	   
 	   createBufferStrategy(1);
 	   m_bufferStrategy = getBufferStrategy();
 	   m_graphics = m_bufferStrategy.getDrawGraphics(); 
 	   
+   }
+   
+   public void setSideMenu(SideMenu sideMenu) {
+	   //JScrollPane pane = new JScrollPane();
+	   //pane.add(sideMenu);
+	   //m_frame.add(pane);
+	   m_frame.add(sideMenu);
+	   m_frame.pack();
+   }
+   
+   
+   public void setOnClickListener(KeyListener l) {
+	   m_frame.addKeyListener(l);
    }
    
    public void SwapBuffers(){
