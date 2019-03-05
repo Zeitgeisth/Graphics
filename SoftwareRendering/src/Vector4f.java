@@ -12,6 +12,11 @@ public class Vector4f
 		this.z = z;
 		this.w = w;
 	}
+	
+	public Vector4f(float x, float y, float z)
+	{
+		this(x, y, z, 1.0f);
+	}
 
 	public float Length()
 	{
@@ -52,6 +57,15 @@ public class Vector4f
 		return this.Cross(axis.Mul(sinAngle)).Add(           //Rotation on local X
 				(this.Mul(cosAngle)).Add(                     //Rotation on local Z
 						axis.Mul(this.Dot(axis.Mul(1 - cosAngle))))); //Rotation on local Y
+	}
+	
+	public Vector4f Rotate(Quaternion rotation)
+	{
+		Quaternion conjugate = rotation.Conjugate();
+
+		Quaternion w = rotation.Mul(this).Mul(conjugate);
+
+		return new Vector4f(w.GetX(), w.GetY(), w.GetZ(), 1.0f);
 	}
 
 

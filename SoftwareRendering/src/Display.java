@@ -22,6 +22,9 @@ public class Display extends Canvas {
    private final byte[] m_displayComponents;
    private final BufferStrategy m_bufferStrategy;
    private final Graphics m_graphics;
+   
+   private final Input m_input;
+   
    public Display(int width, int height, String title){
 	   this.width = width;
 	   this.height = height;
@@ -54,6 +57,16 @@ public class Display extends Canvas {
 	   m_bufferStrategy = getBufferStrategy();
 	   m_graphics = m_bufferStrategy.getDrawGraphics(); 
 	   
+	   
+		m_input = new Input();
+		addKeyListener(m_input);
+		addFocusListener(m_input);
+		addMouseListener(m_input);
+		addMouseMotionListener(m_input);
+
+		setFocusable(true);
+		requestFocus();
+	   
    }
    
    public void setSideMenu(SideMenu sideMenu) {
@@ -83,5 +96,9 @@ public class Display extends Canvas {
    }
    public int GetHeight(){
 	   return this.height;
+   }
+   
+   public Input GetInput(){ 
+	   return m_input; 
    }
 }

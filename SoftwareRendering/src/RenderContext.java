@@ -216,5 +216,11 @@ public class RenderContext extends Bitmap {
 			}
 		}
 	}
+	
+	public void drawPlane(Vertex[] vert, int[] indices,Matrix4f translation, Bitmap texture){
+		for(int i = 0; i < indices.length ; i += 3){
+			this.DrawTriangle(vert[indices[i]].Transform(translation), vert[indices[i+1]].Transform(translation), vert[indices[i+2]].Transform(translation), texture);
+		}
+	}
 
 }
