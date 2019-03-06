@@ -1,9 +1,9 @@
 public class Vector4f
 {
-	private final float x;
-	private final float y;
-	private final float z;
-	private final float w;
+	private float x;
+	private float y;
+	private float z;
+	private float w;
 
 	public Vector4f(float x, float y, float z, float w)
 	{
@@ -12,6 +12,13 @@ public class Vector4f
 		this.z = z;
 		this.w = w;
 	}
+	
+	public void setX(float x) {this.x = x;}
+	public void setY(float y) {this.y = y;}
+	public void setZ(float z) {this.z = z;}
+	public void setW(float w) {this.w = w;}
+
+	
 	
 	public Vector4f(float x, float y, float z)
 	{

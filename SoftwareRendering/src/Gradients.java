@@ -4,6 +4,7 @@ public class Gradients
 	private float[] m_texCoordY;
 	private float[] m_oneOverZ;
 	private float[] m_depth;
+	private float[] m_lightAmt;
 
 	private float m_texCoordXXStep;
 	private float m_texCoordXYStep;
@@ -13,6 +14,8 @@ public class Gradients
 	private float m_oneOverZYStep;
 	private float m_depthXStep;
 	private float m_depthYStep;
+	private float m_lightAmtXStep;
+	private float m_lightAmtYStep;
 	
 
 	public float GetTexCoordX(int loc) { return m_texCoordX[loc]; }
@@ -20,6 +23,7 @@ public class Gradients
 	public float GetOneOverZ(int loc) { return m_oneOverZ[loc]; }
 	public float GetDepth(int loc) { return m_depth[loc]; }
 
+	public float GetLightAmt(int loc) { return m_lightAmt[loc]; }
 
 	public float GetTexCoordXXStep() { return m_texCoordXXStep; }
 	public float GetTexCoordXYStep() { return m_texCoordXYStep; }
@@ -29,6 +33,9 @@ public class Gradients
 	public float GetOneOverZYStep() { return m_oneOverZYStep; }
 	public float GetDepthXStep(){return m_depthXStep;}
 	public float GetDepthYStep(){return m_depthYStep;}
+	public float GetLightAmtXStep() { return m_lightAmtXStep; }
+	public float GetLightAmtYStep() { return m_lightAmtYStep; }
+	
 
 	private float CalcXStep(float[] values, Vertex minYVert, Vertex midYVert,
 			Vertex maxYVert, float oneOverdX)
@@ -49,8 +56,11 @@ public class Gradients
 			((values[0] - values[2]) *
 			(midYVert.GetX() - maxYVert.GetX()))) * oneOverdY;
 	}
+	
+	
 
-	public Gradients(Vertex minYVert, Vertex midYVert, Vertex maxYVert)
+	public Gradients(Vertex minYVert, Vertex midYVert, Vertex maxYVert, 
+			Vector3f viewDir, Vector3f lightPos)
 	{
 		float oneOverdX = 1.0f /
 			(((midYVert.GetX() - maxYVert.GetX()) *
@@ -64,10 +74,19 @@ public class Gradients
 		m_texCoordX = new float[3];
 		m_texCoordY = new float[3];
 		m_depth = new float[3];
+		m_lightAmt = new float[3];
 
 		m_depth[0] = minYVert.GetPosition().GetZ();
 		m_depth[1] = midYVert.GetPosition().GetZ();
 		m_depth[2] = maxYVert.GetPosition().GetZ();
+		
+		
+		//Lighting
+		Vector4f lightDir = new Vector4f(lightPos.x,lightPos.y,lightPos.z);
+		m_lightAmt[0] = LightingModel.CalculateLighting(minYVert, viewDir, lightPos);
+		m_lightAmt[1] = LightingModel.CalculateLighting(midYVert, viewDir, lightPos);
+		m_lightAmt[2] = LightingModel.CalculateLighting(maxYVert, viewDir, lightPos);
+		
 		
 		m_oneOverZ[0] = 1.0f/minYVert.GetPosition().GetW();
 		m_oneOverZ[1] = 1.0f/midYVert.GetPosition().GetW();
@@ -89,6 +108,8 @@ public class Gradients
 		m_oneOverZYStep  = CalcYStep(m_oneOverZ, minYVert, midYVert, maxYVert, oneOverdY);
 		m_depthXStep     = CalcXStep(m_depth, minYVert, midYVert, maxYVert, oneOverdX);
 		m_depthYStep     = CalcYStep(m_depth, minYVert, midYVert, maxYVert, oneOverdY);
+		m_lightAmtXStep = CalcXStep(m_lightAmt, minYVert, midYVert, maxYVert, oneOverdX);
+		m_lightAmtYStep = CalcYStep(m_lightAmt, minYVert, midYVert, maxYVert, oneOverdY);
 		
 		
 		

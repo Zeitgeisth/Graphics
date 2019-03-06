@@ -65,10 +65,10 @@ public class Stars3D {
 				y2 = y;
 			}else if(triangleBuilderCounter == 3){
 				triangleBuilderCounter = 0;
-				Vertex v1 = new Vertex(new Vector4f(-1, -1, 0, 1), new Vector4f(1.0f, 0.0f, 0.0f, 0.0f));
-				Vertex v2 = new Vertex(new Vector4f(-1, -1, 0, 1), new Vector4f(1.0f, 0.0f, 0.0f, 0.0f));
-				Vertex v3 = new Vertex(new Vector4f(-1, -1, 0, 1), new Vector4f(1.0f, 0.0f, 0.0f, 0.0f));
-				
+//				Vertex v1 = new Vertex(new Vector4f(-1, -1, 0, 1), new Vector4f(1.0f, 0.0f, 0.0f, 0.0f));
+//				Vertex v2 = new Vertex(new Vector4f(-1, -1, 0, 1), new Vector4f(1.0f, 0.0f, 0.0f, 0.0f));
+//				Vertex v3 = new Vertex(new Vector4f(-1, -1, 0, 1), new Vector4f(1.0f, 0.0f, 0.0f, 0.0f));
+//				
 				//target.FillTriangle(v1, v2, v3);
 			}
 		}

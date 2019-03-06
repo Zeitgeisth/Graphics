@@ -20,10 +20,18 @@ public class Transform
 		m_rot = rot;
 		m_scale = scale;
 	}
+	public void SetRot(Matrix4f rot)
+	{
+		this.m_rot = new Quaternion(rot);
+	}
 
 	public Transform SetPos(Vector4f pos)
 	{
 		return new Transform(pos, m_rot, m_scale);
+	}
+	
+	public void SetPosSelf(Vector4f pos) {
+		this.m_pos = pos;
 	}
 
 	public Transform Rotate(Quaternion rotation)

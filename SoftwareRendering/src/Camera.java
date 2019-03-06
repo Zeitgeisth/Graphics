@@ -7,7 +7,7 @@ public class Camera
 	private Transform m_transform;
 	private Matrix4f m_projection;
 
-	private Transform GetTransform()
+	public Transform GetTransform()
 	{
 		return m_transform;
 	}
@@ -34,14 +34,10 @@ public class Camera
 
 	public void Update(Input input, float delta)
 	{
-		// Speed and rotation amounts are hardcoded here.
-		// In a more general system, you might want to have them as variables.
 		final float sensitivityX = delta;
 		final float sensitivityY = delta;
 		final float movAmt = 1.0f * delta;
 
-		// Similarly, input keys are hardcoded here.
-		// As before, in a more general system, you might want to have these as variables.
 		if(input.GetKey(KeyEvent.VK_W))
 			Move(GetTransform().GetRot().GetForward(), movAmt);
 		if(input.GetKey(KeyEvent.VK_S))
@@ -51,10 +47,10 @@ public class Camera
 		if(input.GetKey(KeyEvent.VK_D))
 			Move(GetTransform().GetRot().GetRight(), movAmt);
 		
-		if(input.GetKey(KeyEvent.VK_RIGHT))
-			Rotate(Y_AXIS, sensitivityX);
-		if(input.GetKey(KeyEvent.VK_LEFT))
-			Rotate(Y_AXIS, -sensitivityX);
+//		if(input.GetKey(KeyEvent.VK_RIGHT))
+//			Rotate(Y_AXIS, sensitivityX);
+//		if(input.GetKey(KeyEvent.VK_LEFT))
+//			Rotate(Y_AXIS, -sensitivityX);
 		if(input.GetKey(KeyEvent.VK_DOWN))
 			Rotate(GetTransform().GetRot().GetRight(), sensitivityY);
 		if(input.GetKey(KeyEvent.VK_UP))
@@ -69,5 +65,15 @@ public class Camera
 	private void Rotate(Vector4f axis, float angle)
 	{
 		m_transform = GetTransform().Rotate(new Quaternion(axis, angle));
+	}
+	
+	public void Rotate(Vector4f forward, Vector4f up) {
+		Matrix4f rot = new Matrix4f().InitRotation(forward, up);
+		this.m_transform.SetRot(rot);
+	}
+	
+	public void TranslateTo(Vector4f transPoint) {
+		//this.m_transform.SetPos(transPoint);
+		this.m_transform.SetPosSelf(transPoint);
 	}
 }
